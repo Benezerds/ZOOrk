@@ -65,9 +65,52 @@ void ZOOrkEngine::handleGoCommand(std::vector<std::string> arguments) {
 }
 
 void ZOOrkEngine::handleLookCommand(std::vector<std::string> arguments) {
-    // To be implemented
-    std::cout << "This functionality is not yet enabled.\n";
+    // If no arguments were provided, print an error message
+    if (arguments.empty()) {
+        std::cout << "No arguments provided.\n";
+        return;
+    }
+
+    std::string direction;
+    if (arguments[0] == "n" || arguments[0] == "north") {
+        direction = "north";
+    } else if (arguments[0] == "s" || arguments[0] == "south") {
+        direction = "south";
+    } else if (arguments[0] == "e" || arguments[0] == "east") {
+        direction = "east";
+    } else if (arguments[0] == "w" || arguments[0] == "west") {
+        direction = "west";
+    } else if (arguments[0] == "u" || arguments[0] == "up") {
+        direction = "up";
+    } else if (arguments[0] == "d" || arguments[0] == "down") {
+        direction = "down";
+    } else {
+        direction = arguments[0];
+    }
+
+    // Get the player's current room
+    Room* currentRoom = player->getCurrentRoom();
+
+    // Try to get the passage in the specified direction
+    std::shared_ptr<Passage> passage = currentRoom->getPassage(direction);
+
+    // If the passage exists, print a simple message about the room it leads to
+    if (passage != nullptr) {
+        // Get the room in the specified direction
+        Room* nextRoom = passage->getTo();
+
+        // If the next room exists and the passage leads from the current room to the next room, print out a simple message about the next room
+        if (nextRoom != nullptr && passage->getFrom() == currentRoom && passage->getTo() == nextRoom) {
+            std::cout << "You see a " << nextRoom->getName() << " on the " << direction << " side.\n";
+        } else {
+            std::cout << "Next room does not exist or passage does not lead from current room to next room.\n";
+        }
+    } else {
+        // If the passage does not exist, print an error message
+        std::cout << "Passage does not exist.\n";
+    }
 }
+
 
 void ZOOrkEngine::handleTakeCommand(std::vector<std::string> arguments) {
     // To be implemented
