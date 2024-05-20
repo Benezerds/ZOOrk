@@ -1,0 +1,16 @@
+# ninja log v5
+25	683	7379153319058550	CMakeFiles/ZOOrk.dir/GameObject.cpp.obj	d1af5d3f087fc412
+10	938	7379153321591172	CMakeFiles/ZOOrk.dir/Item.cpp.obj	2ed3de83e18f4ca0
+14	967	7379153321873806	CMakeFiles/ZOOrk.dir/Character.cpp.obj	4760410e6915e5d1
+19	1065	7379153322805749	CMakeFiles/ZOOrk.dir/Location.cpp.obj	e76fc1fa93c551dc
+3	1257	7379153324782945	CMakeFiles/ZOOrk.dir/main.cpp.obj	a879758a7c09d28a
+29	1512	7379153327324921	CMakeFiles/ZOOrk.dir/Room.cpp.obj	b177c750d304b72b
+967	1701	7379153329238106	CMakeFiles/ZOOrk.dir/NullCommand.cpp.obj	711bfb22cf0e50e
+1257	2004	7379153332254910	CMakeFiles/ZOOrk.dir/RoomDefaultEnterCommand.cpp.obj	cb3c9945d5d0ea3b
+694	2029	7379153332458806	CMakeFiles/ZOOrk.dir/Passage.cpp.obj	57e8ab5ea0c58043
+1065	2114	7379153333363287	CMakeFiles/ZOOrk.dir/Player.cpp.obj	a0f67f4dbb908448
+939	2117	7379153333393287	CMakeFiles/ZOOrk.dir/NullRoom.cpp.obj	52efd6bebcab2c93
+1701	2612	7379153338362632	CMakeFiles/ZOOrk.dir/PassageDefaultEnterCommand.cpp.obj	acf67ec737dcf868
+1512	3007	7379153342301393	CMakeFiles/ZOOrk.dir/ZOOrkEngine.cpp.obj	d44a33ac92ed0fe1
+2004	3080	7379153343031054	CMakeFiles/ZOOrk.dir/NullPassage.cpp.obj	11ae51c382896995
+3080	3396	7379153346128412	ZOOrk.exe	60e7f554b1895605

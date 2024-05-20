@@ -1,0 +1,3 @@
+D:/College/Semester 6/Professional Software Development/Assignment 3/ZOOrk/cmake-build-debug/CMakeFiles/ZOOrk.dir
+D:/College/Semester 6/Professional Software Development/Assignment 3/ZOOrk/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/College/Semester 6/Professional Software Development/Assignment 3/ZOOrk/cmake-build-debug/CMakeFiles/rebuild_cache.dir
