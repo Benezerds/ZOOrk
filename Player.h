@@ -1,13 +1,10 @@
-//
-// Created by Richard Skarbez on 5/7/23.
-//
-
 #ifndef ZOORK_PLAYER_H
 #define ZOORK_PLAYER_H
 
 #include "Character.h"
 #include "Location.h"
 #include "NullRoom.h"
+#include <vector>
 
 class Player : public Character {
 public:
@@ -23,6 +20,10 @@ public:
 
     Room* getCurrentRoom() const;
 
+    void addItem(Item*);
+    void removeItem(const std::string&);
+    Item* getItem(const std::string&);
+
     Player(const Player &) = delete;
 
     Player &operator=(const Player &) = delete;
@@ -30,6 +31,7 @@ public:
 private:
     static Player *playerInstance;
     Room* currentRoom;
+    std::vector<Item*> inventory;
 
     Player() : Character("You", "You are a person, alike in dignity to any other, but uniquely you."),
                currentRoom(new NullRoom()) {}

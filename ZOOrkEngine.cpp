@@ -113,13 +113,41 @@ void ZOOrkEngine::handleLookCommand(std::vector<std::string> arguments) {
 
 
 void ZOOrkEngine::handleTakeCommand(std::vector<std::string> arguments) {
-    // To be implemented
-    std::cout << "This functionality is not yet enabled.\n";
+    if (arguments.empty()) {
+        std::cout << "You must specify an item to take.\n";
+        return;
+    }
+
+    std::string itemName = arguments[0];
+    Room* currentRoom = player->getCurrentRoom();
+    Item* item = currentRoom->getItem(itemName);
+
+    if (item == nullptr) {
+        std::cout << "There is no item '" << itemName << "' here.\n";
+    } else {
+        player->addItem(item);
+        currentRoom->removeItem(item->getName());
+        std::cout << "You took the " << itemName << ".\n";
+    }
 }
 
 void ZOOrkEngine::handleDropCommand(std::vector<std::string> arguments) {
-    // To be implemented
-    std::cout << "This functionality is not yet enabled.\n";
+    if (arguments.empty()) {
+        std::cout << "You must specify an item to drop.\n";
+        return;
+    }
+
+    std::string itemName = arguments[0];
+    Item* item = player->getItem(itemName);
+
+    if (item == nullptr) {
+        std::cout << "You do not have an item '" << itemName << "'.\n";
+    } else {
+        player->removeItem(item->getName());
+        Room* currentRoom = player->getCurrentRoom();
+        currentRoom->addItem(item);
+        std::cout << "You dropped the " << itemName << ".\n";
+    }
 }
 
 void ZOOrkEngine::handleQuitCommand(std::vector<std::string> arguments) {
