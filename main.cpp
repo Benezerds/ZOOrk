@@ -4,6 +4,7 @@
 #include "Room.h"
 #include "ZOOrkEngine.h"
 #include "Item.h"
+#include "Door.h"
 
 int main() {
     std::shared_ptr<Room> start = std::make_shared<Room>("start-room",
@@ -17,11 +18,23 @@ int main() {
 
     // Create an Item object
     Item* apple = new Item("apple", "A juicy red apple.");
+    Item* key = new Item("key", "A small brass key.");
 
-    // Add the item to the start room
+    // Add the items to the start room
     start->addItem(apple);
+    start->addItem(key);
 
-    Passage::createBasicPassage(start.get(), south_of_house.get(), "south", true);
+    // Create a Door object
+    std::shared_ptr<Door> door = std::make_shared<Door>("door", "A locked door.", key);
+
+    // Connect the door from the start room to the south_of_house room
+    door->setFrom(start.get());
+    door->setTo(south_of_house.get());
+
+    // Add the door to the start room and the south_of_house room
+    start->addPassage("south", door);
+    south_of_house->addPassage("north", door);
+
     Passage::createBasicPassage(south_of_house.get(), behind_house.get(), "east", true);
 
     ZOOrkEngine zoork(start);

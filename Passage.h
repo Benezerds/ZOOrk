@@ -20,6 +20,9 @@ public:
 
     Passage(const std::string &, const std::string &, std::shared_ptr<Command>, Room*, Room*);
 
+    Passage(const std::string& name, const std::string& description)
+            : Location(name, description), name(name), description(description) {}
+
     void setFrom(Room*);
 
     Room* getFrom() const;
@@ -33,6 +36,9 @@ protected:
 
     Room* fromRoom;
     Room* toRoom;
+
+    std::string name;
+    std::string description;
 };
 
 #endif //ZOORK_PASSAGE_H

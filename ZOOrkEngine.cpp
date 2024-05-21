@@ -3,6 +3,7 @@
 //
 
 #include "ZOOrkEngine.h"
+#include "Door.h"
 
 #include <utility>
 #include <algorithm>
@@ -34,7 +35,9 @@ void ZOOrkEngine::run() {
             handleDropCommand(arguments);
         } else if (command == "quit") {
             handleQuitCommand(arguments);
-        } else {
+        } else if (command == "use") {
+            handleUseCommand(arguments);
+        }else {
             std::cout << "I don't understand that command.\n";
         }
     }
@@ -59,9 +62,19 @@ void ZOOrkEngine::handleGoCommand(std::vector<std::string> arguments) {
     }
 
     Room* currentRoom = player->getCurrentRoom();
-    auto passage = currentRoom->getPassage(direction);
-    player->setCurrentRoom(passage->getTo());
-    passage->enter();
+    std::shared_ptr<Passage> passage = currentRoom->getPassage(direction);
+
+    // Try to cast the Passage to a Door
+    std::shared_ptr<Door> doorPtr = std::dynamic_pointer_cast<Door>(passage);
+    if (doorPtr && !doorPtr->tryToOpen(player)) {
+        std::cout << "The door to the " << direction << " is locked.\n";
+    } else if (passage) {
+        Room* otherRoom = (currentRoom == passage->getFrom()) ? passage->getTo() : passage->getFrom();
+        player->setCurrentRoom(otherRoom);
+        std::cout << "You moved to the " << direction << ".\n";
+    } else {
+        std::cout << "There is no passage to the " << direction << ".\n";
+    }
 }
 
 void ZOOrkEngine::handleLookCommand(std::vector<std::string> arguments) {
@@ -96,21 +109,26 @@ void ZOOrkEngine::handleLookCommand(std::vector<std::string> arguments) {
 
     // If the passage exists, print a simple message about the room it leads to
     if (passage != nullptr) {
-        // Get the room in the specified direction
-        Room* nextRoom = passage->getTo();
-
-        // If the next room exists and the passage leads from the current room to the next room, print out a simple message about the next room
-        if (nextRoom != nullptr && passage->getFrom() == currentRoom && passage->getTo() == nextRoom) {
-            std::cout << "You see a " << nextRoom->getName() << " on the " << direction << " side.\n";
+        // Try to cast the Passage to a Door
+        std::shared_ptr<Door> doorPtr = std::dynamic_pointer_cast<Door>(passage);
+        if (doorPtr) {
+            std::cout << "There is a door to the " << direction << ".\n";
         } else {
-            std::cout << "Next room does not exist or passage does not lead from current room to next room.\n";
+            // Get the room in the specified direction
+            Room* nextRoom = passage->getTo();
+
+            // If the next room exists and the passage leads from the current room to the next room, print out a simple message about the next room
+            if (nextRoom != nullptr && passage->getFrom() == currentRoom && passage->getTo() == nextRoom) {
+                std::cout << "You see a " << nextRoom->getName() << " on the " << direction << " side.\n";
+            } else {
+                std::cout << "Next room does not exist or passage does not lead from current room to next room.\n";
+            }
         }
     } else {
         // If the passage does not exist, print an error message
         std::cout << "Passage does not exist.\n";
     }
 }
-
 
 void ZOOrkEngine::handleTakeCommand(std::vector<std::string> arguments) {
     if (arguments.empty()) {
@@ -179,3 +197,30 @@ std::string ZOOrkEngine::makeLowercase(std::string input) {
 
     return output;
 }
+
+void ZOOrkEngine::handleUseCommand(std::vector<std::string> arguments) {
+    if (arguments.empty()) {
+        std::cout << "You must specify an item to use.\n";
+        return;
+    }
+
+    std::string itemName = arguments[0];
+    Item* item = player->getItem(itemName);
+
+    if (item == nullptr) {
+        std::cout << "You do not have an item '" << itemName << "'.\n";
+    } else {
+        // Get the current room and the door passage
+        Room* currentRoom = player->getCurrentRoom();
+        std::shared_ptr<Passage> door = currentRoom->getPassage("door");
+
+        // Try to cast the Passage to a Door
+        std::shared_ptr<Door> doorPtr = std::dynamic_pointer_cast<Door>(door);
+        if (doorPtr && doorPtr->tryToOpen(player)) {
+            std::cout << "You used the " << itemName << " to open the door.\n";
+        } else {
+            std::cout << "You can't use the " << itemName << " here.\n";
+        }
+    }
+}
+

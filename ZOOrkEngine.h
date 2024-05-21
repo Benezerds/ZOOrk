@@ -37,6 +37,8 @@ private:
     static std::vector<std::string> tokenizeString(const std::string&);
 
     static std::string makeLowercase(std::string);
+
+    void handleUseCommand(std::vector<std::string> arguments);
 };
 
 
