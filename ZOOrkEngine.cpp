@@ -71,7 +71,7 @@ void ZOOrkEngine::handleGoCommand(std::vector<std::string> arguments) {
     } else if (passage) {
         Room* otherRoom = (currentRoom == passage->getFrom()) ? passage->getTo() : passage->getFrom();
         player->setCurrentRoom(otherRoom);
-        std::cout << "You moved to the " << direction << ".\n";
+        std::cout << otherRoom->getDescription();
     } else {
         std::cout << "There is no passage to the " << direction << ".\n";
     }
