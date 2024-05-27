@@ -37,7 +37,9 @@ void ZOOrkEngine::run() {
             handleQuitCommand(arguments);
         } else if (command == "use") {
             handleUseCommand(arguments);
-        }else {
+        } else if (command == "check") {
+            handleCheckCommand();
+        } else {
             std::cout << "I don't understand that command.\n";
         }
     }
@@ -61,7 +63,7 @@ void ZOOrkEngine::handleGoCommand(std::vector<std::string> arguments) {
         direction = arguments[0];
     }
 
-    Room* currentRoom = player->getCurrentRoom();
+    Room *currentRoom = player->getCurrentRoom();
     std::shared_ptr<Passage> passage = currentRoom->getPassage(direction);
 
     // Try to cast the Passage to a Door
@@ -69,7 +71,7 @@ void ZOOrkEngine::handleGoCommand(std::vector<std::string> arguments) {
     if (doorPtr && !doorPtr->tryToOpen(player)) {
         std::cout << "The door to the " << direction << " is locked.\n";
     } else if (passage) {
-        Room* otherRoom = (currentRoom == passage->getFrom()) ? passage->getTo() : passage->getFrom();
+        Room *otherRoom = (currentRoom == passage->getFrom()) ? passage->getTo() : passage->getFrom();
         player->setCurrentRoom(otherRoom);
         std::cout << otherRoom->getDescription();
     } else {
@@ -102,7 +104,7 @@ void ZOOrkEngine::handleLookCommand(std::vector<std::string> arguments) {
     }
 
     // Get the player's current room
-    Room* currentRoom = player->getCurrentRoom();
+    Room *currentRoom = player->getCurrentRoom();
 
     // Try to get the passage in the specified direction
     std::shared_ptr<Passage> passage = currentRoom->getPassage(direction);
@@ -115,7 +117,7 @@ void ZOOrkEngine::handleLookCommand(std::vector<std::string> arguments) {
             std::cout << "There is a door to the " << direction << ".\n";
         } else {
             // Get the room in the specified direction
-            Room* nextRoom = passage->getTo();
+            Room *nextRoom = passage->getTo();
 
             // If the next room exists and the passage leads from the current room to the next room, print out a simple message about the next room
             if (nextRoom != nullptr && passage->getFrom() == currentRoom && passage->getTo() == nextRoom) {
@@ -137,8 +139,8 @@ void ZOOrkEngine::handleTakeCommand(std::vector<std::string> arguments) {
     }
 
     std::string itemName = arguments[0];
-    Room* currentRoom = player->getCurrentRoom();
-    Item* item = currentRoom->getItem(itemName);
+    Room *currentRoom = player->getCurrentRoom();
+    Item *item = currentRoom->getItem(itemName);
 
     if (item == nullptr) {
         std::cout << "There is no item '" << itemName << "' here.\n";
@@ -156,13 +158,13 @@ void ZOOrkEngine::handleDropCommand(std::vector<std::string> arguments) {
     }
 
     std::string itemName = arguments[0];
-    Item* item = player->getItem(itemName);
+    Item *item = player->getItem(itemName);
 
     if (item == nullptr) {
         std::cout << "You do not have an item '" << itemName << "'.\n";
     } else {
         player->removeItem(item->getName());
-        Room* currentRoom = player->getCurrentRoom();
+        Room *currentRoom = player->getCurrentRoom();
         currentRoom->addItem(item);
         std::cout << "You dropped the " << itemName << ".\n";
     }
@@ -205,13 +207,13 @@ void ZOOrkEngine::handleUseCommand(std::vector<std::string> arguments) {
     }
 
     std::string itemName = arguments[0];
-    Item* item = player->getItem(itemName);
+    Item *item = player->getItem(itemName);
 
     if (item == nullptr) {
         std::cout << "You do not have an item '" << itemName << "'.\n";
     } else {
         // Get the current room and the door passage
-        Room* currentRoom = player->getCurrentRoom();
+        Room *currentRoom = player->getCurrentRoom();
         std::shared_ptr<Passage> door = currentRoom->getPassage("door");
 
         // Try to cast the Passage to a Door
@@ -223,4 +225,20 @@ void ZOOrkEngine::handleUseCommand(std::vector<std::string> arguments) {
         }
     }
 }
+
+void ZOOrkEngine::handleCheckCommand() {
+    Room* currentRoom = player->getCurrentRoom();
+    std::vector<Item*> items = currentRoom->getItems();
+
+    if (items.empty()) {
+        std::cout << "There are no items in this room.\n";
+    } else {
+        std::cout << "You see the following items:\n";
+        for (Item* item : items) {
+            std::cout << "- " << item->getName() << ": " << item->getDescription() << "\n";
+        }
+    }
+}
+
+
 

@@ -19,6 +19,7 @@ public:
     void addItem(Item*);
     void removeItem(const std::string&);
     Item* getItem(const std::string&);
+    std::vector<Item*> getItems();
 
     void addPassage(const std::string &, std::shared_ptr<Passage>);
 

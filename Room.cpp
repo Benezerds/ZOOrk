@@ -56,3 +56,10 @@ Item* Room::getItem(const std::string& itemName) {
     }
     return nullptr;
 }
+
+std::vector<Item*> Room::getItems() {
+    return items;
+}
+
+
+
