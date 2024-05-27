@@ -10,7 +10,7 @@ int main() {
     //  Map List
     //  Start room
     std::shared_ptr<Room> start = std::make_shared<Room>("start-room",
-                                                         "You are inside a dungeon cell, the room seems pretty empty. There is only a key and door to the east of the room.\n");
+                                                         "You are inside a dungeon cell, the room seems pretty empty. There is only a key and starterDoor to the east of the room.\n");
     Item* prisonKey = new Item("prison-key", "A small brass key.");
     start->addItem(prisonKey);
 
@@ -36,7 +36,6 @@ int main() {
     std::shared_ptr<Room> assembly_point = std::make_shared<Room>("assembly", "What is this place? an assembly? This place kinds of creeps me out!");
 
 
-
     //  Storage
     std::shared_ptr<Room> storage = std::make_shared<Room>("storage", "The storage room! There could be a weapon I can use here");
 
@@ -49,7 +48,7 @@ int main() {
     //  Main Hall
     std::shared_ptr<Room> main_hall = std::make_shared<Room>("main-hall", "This main hall is huge");
 
-    Item* main_hall_key = new Item("mysterious-key", "No one knows which door does this opens");
+    Item* main_hall_key = new Item("mysterious-key", "No one knows which starterDoor does this opens");
     main_hall->addItem(main_hall_key);
 
 
@@ -59,7 +58,7 @@ int main() {
 
 
     //  Final Room
-    std::shared_ptr<Room> final_room = std::make_shared<Room>("final-room", "The door behind is locked! You can't move back, is this the final room?");
+    std::shared_ptr<Room> final_room = std::make_shared<Room>("final-room", "The starterDoor behind is locked! You can't move back, is this the final room?");
 
     Item* gem = new Item("gem", "Shiny gem, maybe you can put it somewhere");
     final_room->addItem(gem);
@@ -76,19 +75,29 @@ int main() {
 
 
     // Create a Door object
-    std::shared_ptr<Door> door = std::make_shared<Door>("door", "A locked door. You need a prison key", prisonKey);
+    std::shared_ptr<Door> starterDoor = std::make_shared<Door>("starterDoor", "A locked starterDoor. You need a prison key", prisonKey);
 
-    // Connect the door from the start room to the south_of_house room
-    door->setFrom(start.get());
-    door->setTo(empty_prison_hallway.get());
+    // Connect the starterDoor from the start room to the south_of_house room
+    starterDoor->setFrom(start.get());
+    starterDoor->setTo(empty_prison_hallway.get());
 
-    // Add the door to the start room and the south_of_house room
-    start->addPassage("east", door);
-    empty_prison_hallway->addPassage("west", door);
+    // Add the starterDoor to the start room and the south_of_house room
+    start->addPassage("east", starterDoor);
+    empty_prison_hallway->addPassage("west", starterDoor);
+
+
+    //  Assembly Door
+    std::shared_ptr<Door> assemblyDoor = std::make_shared<Door>("assemblyDoor", "The door to the assembly is locked. Find the key", assembly_key);
+
+    assemblyDoor->setFrom(empty_prison_hallway.get());
+    assemblyDoor->setTo(assembly_point.get());
+
+    empty_prison_hallway->addPassage("south", assemblyDoor);
+    assembly_point->addPassage("north", assemblyDoor);
+
 
     //  Basic Passage
     Passage::createBasicPassage(empty_prison_hallway.get(), pantry.get(), "east", true);
-    Passage::createBasicPassage(empty_prison_hallway.get(), assembly_point.get(), "south", true);
 
     ZOOrkEngine zoork(start);
 
