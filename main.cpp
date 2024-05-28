@@ -128,6 +128,14 @@ int main() {
     Passage::createBasicPassage(inner_sanctum.get(), arena_of_fate_room.get(), "east", true);
     Passage::createBasicPassage(arena_of_fate_room.get(), chamber_of_revelation.get(), "south", true);
 
+    //  Character
+    Character* lion = new Character("lion", "A lion inside a prison, odd, but the king of the jungle become the king of the cell.");
+
+    lion->setHealth(100);
+    lion->setAttack(10);
+
+    arena_of_fate_room->addCharacter(lion);
+
     ZOOrkEngine zoork(start);
 
     zoork.run();

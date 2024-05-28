@@ -6,6 +6,7 @@
 #include "Item.h"
 #include "Location.h"
 #include <map>
+#include <list>
 #include <vector>
 
 class Passage;
@@ -27,9 +28,13 @@ public:
 
     std::shared_ptr<Passage> getPassage(const std::string &);
 
+    void addCharacter(Character *character);  // Add this method
+
 protected:
     std::vector<Item*> items;
     std::map<std::string, std::shared_ptr<Passage>> passageMap;
+    std::list<Character*> characters;  // Add this member
+
 };
 
 #endif //ZOORK_ROOM_H

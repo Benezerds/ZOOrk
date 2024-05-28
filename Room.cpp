@@ -61,5 +61,11 @@ std::vector<Item*> Room::getItems() {
     return items;
 }
 
+void Room::addCharacter(Character* character) {
+    characters.push_back(character);
+}
+
+
+
 
 
