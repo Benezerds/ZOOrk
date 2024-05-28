@@ -16,7 +16,7 @@ int main() {
 
     //  Prison Hallway
     std::shared_ptr<Room> empty_prison_hallway = std::make_shared<Room>("empty-hallway",
-                                                                        "Great you're out, on the EAST of the hallway, there is a path through a pantry and assembly point room on the SOUTH");
+                                                                        "Great you're out, on the EAST of the hallway, there is a path through a pantry and assembly point room on the SOUTH.\n");
 
     //  Pantry
     std::shared_ptr<Room> pantry = std::make_shared<Room>("pantry",
@@ -29,15 +29,15 @@ int main() {
 
 
     //  Vent
-    std::shared_ptr<Room> vent = std::make_shared<Room>("vent", "This is a long dark vent, what could be on the end? Maybe you should turn back...");
+    std::shared_ptr<Room> vent = std::make_shared<Room>("vent", "This is a long dark vent, what could be on the end? Maybe you should turn back....\n");
 
 
     //  Assembly point
-    std::shared_ptr<Room> assembly_point = std::make_shared<Room>("assembly", "What is this place? an assembly? This place kinds of creeps me out!");
+    std::shared_ptr<Room> assembly_point = std::make_shared<Room>("assembly", "What is this place? an assembly? This place kinds of creeps me out!\n");
 
 
     //  Storage
-    std::shared_ptr<Room> storage = std::make_shared<Room>("storage", "The storage room! There could be a weapon I can use here");
+    std::shared_ptr<Room> storage = std::make_shared<Room>("storage", "The storage room! There could be a weapon I can use here\n");
 
     Item* steak = new Item("steak", "A delicious steak");
     Item* sword = new Item("sword", "You can definitely use this to defend myself");
@@ -46,32 +46,32 @@ int main() {
     storage->addItem(sword);
 
     //  Main Hall
-    std::shared_ptr<Room> main_hall = std::make_shared<Room>("main-hall", "This main hall is huge");
+    std::shared_ptr<Room> main_hall = std::make_shared<Room>("main-hall", "This main hall is huge.\n");
 
-    Item* main_hall_key = new Item("mysterious-key", "No one knows which starterDoor does this opens");
+    Item* main_hall_key = new Item("mysterious-key", "No one knows which starterDoor does this opens.\n");
     main_hall->addItem(main_hall_key);
 
 
     //  Disposal
-    std::shared_ptr<Room> disposal = std::make_shared<Room>("disposal", "You're inside the disposal room. A place where they dispose dead prisoners, disgusting!");
+    std::shared_ptr<Room> disposal = std::make_shared<Room>("disposal", "You're inside the disposal room. A place where they dispose dead prisoners, disgusting!\n");
 
 
 
     //  Final Room
-    std::shared_ptr<Room> final_room = std::make_shared<Room>("final-room", "The starterDoor behind is locked! You can't move back, is this the final room?");
+    std::shared_ptr<Room> final_room = std::make_shared<Room>("final-room", "The starterDoor behind is locked! You can't move back, is this the final room?\n");
 
     Item* gem = new Item("gem", "Shiny gem, maybe you can put it somewhere");
     final_room->addItem(gem);
 
     //  Inner Sanctum
-    std::shared_ptr<Room> inner_sanctum = std::make_shared<Room>("inner-sanctum", "You're inside the inner sanctum. The air seems heavy here, what could be here?");
+    std::shared_ptr<Room> inner_sanctum = std::make_shared<Room>("inner-sanctum", "You're inside the inner sanctum. The air seems heavy here, what could be here?\n");
 
 
     //  Arena of fate
-    std::shared_ptr<Room> arena_of_fate_room = std::make_shared<Room>("arena-of-fate", "You're inside the inner sanctum. The air seems heavy here, what could be here?");
+    std::shared_ptr<Room> arena_of_fate_room = std::make_shared<Room>("arena-of-fate", "You're inside the inner sanctum. The air seems heavy here, what could be here?\n");
 
     //  Chamber of revelation
-    std::shared_ptr<Room> chamber_of_revelation = std::make_shared<Room>("chamber-of-relevation", "You're inside the inner sanctum. The air seems heavy here, what could be here?");
+    std::shared_ptr<Room> chamber_of_revelation = std::make_shared<Room>("chamber-of-relevation", "You're inside the inner sanctum. The air seems heavy here, what could be here?\n");
 
 
     // Create a Door object
@@ -123,6 +123,10 @@ int main() {
     //  Finale Room door, needs a button to be opened
     std::shared_ptr<Door> finaleDoor = std::make_shared<Door>("finaleDoor", "The door to the finale room is locked. Find a way to get in", assembly_key);
 
+    //  Passage from Finale room -> Inner Sanctum -> Arena of Fate & Arena of Fate -> Chamber of Revelation
+    Passage::createBasicPassage(final_room.get(), inner_sanctum.get(), "north", true);
+    Passage::createBasicPassage(inner_sanctum.get(), arena_of_fate_room.get(), "east", true);
+    Passage::createBasicPassage(arena_of_fate_room.get(), chamber_of_revelation.get(), "south", true);
 
     ZOOrkEngine zoork(start);
 
