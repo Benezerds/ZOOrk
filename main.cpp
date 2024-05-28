@@ -99,6 +99,31 @@ int main() {
     //  Basic Passage
     Passage::createBasicPassage(empty_prison_hallway.get(), pantry.get(), "east", true);
 
+    //  Pantry -> Vent
+    Passage::createBasicPassage(pantry.get(), vent.get(), "east", true);
+
+    //  Vent -> Main hall
+    Passage::createBasicPassage(vent.get(), main_hall.get(), "south", true);
+
+    //  Assembly -> Storage & Assembly -> Main Hall
+    Passage::createBasicPassage(assembly_point.get(), storage.get(), "east", true);
+    Passage::createBasicPassage(assembly_point.get(), main_hall.get(), "south", true);
+
+
+    //  Disposal Room door
+    std::shared_ptr<Door> disposalDoor = std::make_shared<Door>("disposalDoor", "The door to the disposal room is locked. Find the key", assembly_key);
+
+    disposalDoor->setFrom(main_hall.get());
+    disposalDoor->setTo(disposal.get());
+
+    main_hall->addPassage("west", disposalDoor);
+    disposal->addPassage("east", disposalDoor);
+
+
+    //  Finale Room door, needs a button to be opened
+    std::shared_ptr<Door> finaleDoor = std::make_shared<Door>("finaleDoor", "The door to the finale room is locked. Find a way to get in", assembly_key);
+
+
     ZOOrkEngine zoork(start);
 
     zoork.run();
