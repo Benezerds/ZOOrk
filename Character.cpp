@@ -42,9 +42,25 @@ Item* Character::getItem(const std::string& itemName) {
 }
 
 void Character::talkTo(Player* player) {
-    // Implement this method based on how you want NPCs to interact with the player
+    // For now, let's just print a message when an NPC talks to the player
+    std::cout << "NPC " << this->getName() << " says: 'Hello, player!'" << std::endl;
 }
 
 void Character::attackTo(Player* player) {
-    // Implement this method based on how you want NPCs to attack the player
+    // Let's make the NPC attack the player by reducing the player's health
+    int playerHealth = player->getHealth();
+    int npcAttack = this->getAttack();
+
+    // Calculate the new health after the attack
+    int newHealth = playerHealth - npcAttack;
+
+    // Make sure health doesn't go below 0
+    if (newHealth < 0) {
+        newHealth = 0;
+    }
+
+    // Set the player's new health
+    player->setHealth(newHealth);
+
+    std::cout << "NPC " << this->getName() << " attacks player, causing " << npcAttack << " damage!" << std::endl;
 }

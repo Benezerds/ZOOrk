@@ -10,7 +10,7 @@ int main() {
     //  Map List
     //  Start room
     std::shared_ptr<Room> start = std::make_shared<Room>("start-room",
-                                                         "You are inside a dungeon cell, the room seems pretty empty. There is only a key and starterDoor to the east of the room.\n");
+                                                         "You are inside a dungeon cell, the room seems pretty empty. There is only a key and a locked prison door to the east of the room.\n");
     Item* prisonKey = new Item("prison-key", "A small brass key.");
     start->addItem(prisonKey);
 
@@ -58,7 +58,7 @@ int main() {
 
 
     //  Final Room
-    std::shared_ptr<Room> final_room = std::make_shared<Room>("final-room", "The starterDoor behind is locked! You can't move back, is this the final room?\n");
+    std::shared_ptr<Room> final_room = std::make_shared<Room>("final-room", "The door behind  that leads to the main hall is locked! You can't move back, is this the final room?\n");
 
     Item* gem = new Item("gem", "Shiny gem, maybe you can put it somewhere");
     final_room->addItem(gem);
@@ -124,6 +124,7 @@ int main() {
     std::shared_ptr<Door> finaleDoor = std::make_shared<Door>("finaleDoor", "The door to the finale room is locked. Find a way to get in", assembly_key);
 
     //  Passage from Finale room -> Inner Sanctum -> Arena of Fate & Arena of Fate -> Chamber of Revelation
+    Passage::createBasicPassage(main_hall.get(), final_room.get(), "east", true);
     Passage::createBasicPassage(final_room.get(), inner_sanctum.get(), "north", true);
     Passage::createBasicPassage(inner_sanctum.get(), arena_of_fate_room.get(), "east", true);
     Passage::createBasicPassage(arena_of_fate_room.get(), chamber_of_revelation.get(), "south", true);

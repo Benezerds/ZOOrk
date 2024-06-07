@@ -227,18 +227,15 @@ void ZOOrkEngine::handleUseCommand(std::vector<std::string> arguments) {
 }
 
 void ZOOrkEngine::handleCheckCommand() {
-    Room* currentRoom = player->getCurrentRoom();
-    std::vector<Item*> items = currentRoom->getItems();
+    Room *currentRoom = player->getCurrentRoom();
+    std::vector<Item *> items = currentRoom->getItems();
 
     if (items.empty()) {
         std::cout << "There are no items in this room.\n";
     } else {
         std::cout << "You see the following items:\n";
-        for (Item* item : items) {
+        for (Item *item: items) {
             std::cout << "- " << item->getName() << ": " << item->getDescription() << "\n";
         }
     }
 }
-
-
-
