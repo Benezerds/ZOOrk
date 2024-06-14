@@ -28,7 +28,11 @@ public:
 
     std::shared_ptr<Passage> getPassage(const std::string &);
 
-    void addCharacter(Character *character);  // Add this method
+    void addCharacter(Character *character);
+
+    Character* getCharacter(const std::string& characterName);
+
+    std::list<Character*> getCharacters();
 
 protected:
     std::vector<Item*> items;

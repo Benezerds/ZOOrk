@@ -12,6 +12,9 @@ ZOOrkEngine::ZOOrkEngine(std::shared_ptr<Room> start) {
     player = Player::instance();
     player->setCurrentRoom(start.get());
     player->getCurrentRoom()->enter();
+
+    player->setHealth(100);
+    player->setAttack(10);
 }
 
 void ZOOrkEngine::run() {
@@ -39,6 +42,8 @@ void ZOOrkEngine::run() {
             handleUseCommand(arguments);
         } else if (command == "check") {
             handleCheckCommand();
+        } else if (command == "fight") {
+            handleFightCommand(arguments);
         } else {
             std::cout << "I don't understand that command.\n";
         }
@@ -229,6 +234,7 @@ void ZOOrkEngine::handleUseCommand(std::vector<std::string> arguments) {
 void ZOOrkEngine::handleCheckCommand() {
     Room *currentRoom = player->getCurrentRoom();
     std::vector<Item *> items = currentRoom->getItems();
+    std::list<Character*> characters = currentRoom->getCharacters();  // Get the characters in the room
 
     if (items.empty()) {
         std::cout << "There are no items in this room.\n";
@@ -236,6 +242,57 @@ void ZOOrkEngine::handleCheckCommand() {
         std::cout << "You see the following items:\n";
         for (Item *item: items) {
             std::cout << "- " << item->getName() << ": " << item->getDescription() << "\n";
+        }
+    }
+
+    if (characters.empty()) {
+        std::cout << "There are no characters in this room.\n";
+    } else {
+        std::cout << "You see the following characters:\n";
+        for (Character *character: characters) {
+            std::cout << "- " << character->getName() << "\n";
+        }
+    }
+}
+
+
+void ZOOrkEngine::handleFightCommand(std::vector<std::string> arguments) {
+    // Check if the user specified an enemy to fight
+    if (arguments.empty()) {
+        std::cout << "You must specify an enemy to fight.\n";
+        return;
+    }
+
+    // Get the enemy name from the arguments
+    std::string enemyName = arguments[0];
+
+    // Get the enemy character from the current room
+    Character *enemy = player->getCurrentRoom()->getCharacter(enemyName); // You need to implement this function
+
+    // Check if the enemy exists in the current room
+    if (!enemy) {
+        std::cout << "There's no enemy named '" << enemyName << "' here to fight!" << std::endl;
+        return;
+    }
+
+    // The fight continues until either the player or the enemy dies
+    while (player->getHealth() > 0 && enemy->getHealth() > 0) {
+        // The player attacks the enemy
+        player->attack(enemy);
+
+        // Check if the enemy is dead
+        if (enemy->getHealth() <= 0) {
+            std::cout << "You have defeated the enemy '" << enemyName << "'!" << std::endl;
+            break;
+        }
+
+        // The enemy attacks the player
+        enemy->attackTo(player);
+
+        // Check if the player is dead
+        if (player->getHealth() <= 0) {
+            std::cout << "You have been defeated by the enemy '" << enemyName << "'!" << std::endl;
+            break;
         }
     }
 }

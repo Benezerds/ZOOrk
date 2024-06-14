@@ -33,3 +33,12 @@ Item* Player::getItem(const std::string& itemName) {
     }
     return nullptr;
 }
+
+void Player::attack(Character* character) {
+    // Calculate damage based on the player's attack value
+    int damage = this->getAttack();
+
+    // Reduce the character's health by the damage amount
+    int characterHealth = character->getHealth();
+    character->setHealth(characterHealth - damage);
+}

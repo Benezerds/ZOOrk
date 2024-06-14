@@ -131,10 +131,16 @@ int main() {
 
     //  Character
     Character* lion = new Character("lion", "A lion inside a prison, odd, but the king of the jungle become the king of the cell.");
+    Character* prisoner = new Character("prisoner", "A fellow cellmate");
+    Player* player = Player::instance();
 
     lion->setHealth(100);
     lion->setAttack(10);
 
+    prisoner->setHealth(50);
+    prisoner->setAttack(2);
+
+    start->addCharacter(prisoner);
     arena_of_fate_room->addCharacter(lion);
 
     ZOOrkEngine zoork(start);

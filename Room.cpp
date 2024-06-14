@@ -65,6 +65,19 @@ void Room::addCharacter(Character* character) {
     characters.push_back(character);
 }
 
+Character* Room::getCharacter(const std::string& characterName) {
+    for (Character* character : characters) {  // Assuming 'characters' is a list of characters in the room
+        if (character->getName() == characterName) {
+            return character;
+        }
+    }
+    return nullptr;  // Return nullptr if no character with the given name is found
+}
+
+std::list<Character*> Room::getCharacters() {
+    return characters;  // Assuming 'characters' is a list of characters in the room
+}
+
 
 
 

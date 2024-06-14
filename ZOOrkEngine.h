@@ -36,6 +36,8 @@ private:
 
     void handleUseCommand(std::vector<std::string> arguments);
 
+    void handleFightCommand(std::vector<std::string>);
+
 
 
     static std::vector<std::string> tokenizeString(const std::string&);

@@ -24,6 +24,8 @@ public:
     void removeItem(const std::string&);
     Item* getItem(const std::string&);
 
+    void attack(Character* character);  // Add this line
+
     Player(const Player &) = delete;
 
     Player &operator=(const Player &) = delete;
