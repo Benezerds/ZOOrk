@@ -7,6 +7,7 @@
 
 #include <utility>
 #include <algorithm>
+#include <limits>
 
 ZOOrkEngine::ZOOrkEngine(std::shared_ptr<Room> start) {
     player = Player::instance();
@@ -14,7 +15,7 @@ ZOOrkEngine::ZOOrkEngine(std::shared_ptr<Room> start) {
     player->getCurrentRoom()->enter();
 
     player->setHealth(100);
-    player->setAttack(10);
+    player->setAttack(5);
 }
 
 void ZOOrkEngine::run() {
@@ -28,26 +29,31 @@ void ZOOrkEngine::run() {
         std::string command = words[0];
         std::vector<std::string> arguments(words.begin() + 1, words.end());
 
-        if (command == "go") {
-            handleGoCommand(arguments);
-        } else if ((command == "look") || (command == "inspect")) {
-            handleLookCommand(arguments);
-        } else if ((command == "take") || (command == "get")) {
-            handleTakeCommand(arguments);
-        } else if (command == "drop") {
-            handleDropCommand(arguments);
-        } else if (command == "quit") {
-            handleQuitCommand(arguments);
-        } else if (command == "use") {
-            handleUseCommand(arguments);
-        } else if (command == "check") {
-            handleCheckCommand();
-        } else if (command == "fight") {
-            handleFightCommand(arguments);
-        } else if (command == "talk") {
-            handleTalkCommand(arguments);
+        if (player->getHealth() <= 0) {
+            std::cout << "Game Over...";
+            gameOver = true;
         } else {
-            std::cout << "I don't understand that command.\n";
+            if (command == "go") {
+                handleGoCommand(arguments);
+            } else if ((command == "look") || (command == "inspect")) {
+                handleLookCommand(arguments);
+            } else if ((command == "take") || (command == "get")) {
+                handleTakeCommand(arguments);
+            } else if (command == "drop") {
+                handleDropCommand(arguments);
+            } else if (command == "quit") {
+                handleQuitCommand(arguments);
+            } else if (command == "use") {
+                handleUseCommand(arguments);
+            } else if (command == "check") {
+                handleCheckCommand();
+            } else if (command == "fight") {
+                handleFightCommand(arguments);
+            } else if (command == "talk") {
+                handleTalkCommand(arguments);
+            } else {
+                std::cout << "I don't understand that command.\n";
+            }
         }
     }
 }
@@ -278,24 +284,53 @@ void ZOOrkEngine::handleFightCommand(std::vector<std::string> arguments) {
     }
 
     // The fight continues until either the player or the enemy dies
+    bool isPlayerTurn = true; // Variable to keep track of whose turn it is
+    std::string itemName; // Declare itemName here
     while (player->getHealth() > 0 && enemy->getHealth() > 0) {
-        // The player attacks the enemy
-        player->attack(enemy);
+        if (isPlayerTurn) {
+            // Display options to the player
+            std::cout << "Choose an action:\n1. Attack\n2. Use Item\n3. Run\n";
+            int choice;
+            std::cin >> choice;
 
-        // Check if the enemy is dead
-        if (enemy->getHealth() <= 0) {
-            std::cout << "You have defeated the enemy '" << enemyName << "'!" << std::endl;
-            break;
+            // Ignore the newline character
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+            switch (choice) {
+                case 1: // The player attacks the enemy
+                    player->attack(enemy);
+
+                    // Check if the enemy is dead
+                    if (enemy->getHealth() <= 0) {
+                        std::cout << "You have defeated the enemy '" << enemyName << "'!" << std::endl;
+                        return;
+                    }
+                    break;
+                case 2: // The player uses an item
+                    std::cout << "Enter the name of the item you want to use: ";
+                    std::getline(std::cin, itemName);
+                    player->useItem(itemName);
+                    break;
+                case 3: // The player runs away
+                    std::cout << "You ran away from the enemy '" << enemyName << "'!" << std::endl;
+                    return;
+                default:
+                    std::cout << "Invalid choice. Please choose a valid action.\n";
+                    continue;
+            }
+        } else {
+            // The enemy attacks the player
+            enemy->attackTo(player);
+
+            // Check if the player is dead
+            if (player->getHealth() <= 0) {
+                std::cout << "You have been defeated by the enemy '" << enemyName << "'!" << std::endl;
+                return;
+            }
         }
 
-        // The enemy attacks the player
-        enemy->attackTo(player);
-
-        // Check if the player is dead
-        if (player->getHealth() <= 0) {
-            std::cout << "You have been defeated by the enemy '" << enemyName << "'!" << std::endl;
-            break;
-        }
+        // Switch turns
+        isPlayerTurn = !isPlayerTurn;
     }
 }
 

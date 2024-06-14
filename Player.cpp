@@ -42,3 +42,21 @@ void Player::attack(Character* character) {
     int characterHealth = character->getHealth();
     character->setHealth(characterHealth - damage);
 }
+
+void Player::useItem(const std::string& itemName) {
+    // Find the item in the inventory
+    Item* item = getItem(itemName);
+
+    // Check if the item exists in the inventory
+    if (!item) {
+        std::cout << "You don't have an item named '" << itemName << "' in your inventory!" << std::endl;
+        return;
+    }
+
+    // Use the item
+    std::cout << "You used the item '" << itemName << "'." << std::endl;
+
+    // Remove the item from the inventory after use
+    removeItem(itemName);
+}
+

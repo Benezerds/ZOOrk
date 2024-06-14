@@ -10,7 +10,7 @@ int main() {
     //  Map List
     //  Start room
     std::shared_ptr<Room> start = std::make_shared<Room>("start-room",
-                                                         "You are inside a dungeon cell, the room seems pretty empty. There is only a key and a locked prison door to the east of the room.\n");
+                                                         "You are inside a dungeon cell, the room seems pretty empty. There is only a key and a locked prison door.\n");
     Item* prisonKey = new Item("prison-key", "A small brass key.");
     start->addItem(prisonKey);
 

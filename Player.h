@@ -28,6 +28,8 @@ public:
 
     Player(const Player &) = delete;
 
+    void useItem(const std::string&);
+
     Player &operator=(const Player &) = delete;
 
 private:
