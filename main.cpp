@@ -68,10 +68,10 @@ int main() {
 
 
     //  Arena of fate
-    std::shared_ptr<Room> arena_of_fate_room = std::make_shared<Room>("arena-of-fate", "You're inside the inner sanctum. The air seems heavy here, what could be here?\n");
+    std::shared_ptr<Room> arena_of_fate_room = std::make_shared<Room>("arena-of-fate", "This place... There is a lion.. You need to fight it!\n");
 
     //  Chamber of revelation
-    std::shared_ptr<Room> chamber_of_revelation = std::make_shared<Room>("chamber-of-relevation", "You're inside the inner sanctum. The air seems heavy here, what could be here?\n");
+    std::shared_ptr<Room> chamber_of_revelation = std::make_shared<Room>("chamber-of-relevation", "You made it through... But who is it standing in the middle of the room?\n");
 
 
     // Create a Door object
