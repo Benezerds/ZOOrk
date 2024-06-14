@@ -44,6 +44,8 @@ void ZOOrkEngine::run() {
             handleCheckCommand();
         } else if (command == "fight") {
             handleFightCommand(arguments);
+        } else if (command == "talk") {
+            handleTalkCommand(arguments);
         } else {
             std::cout << "I don't understand that command.\n";
         }
@@ -234,7 +236,7 @@ void ZOOrkEngine::handleUseCommand(std::vector<std::string> arguments) {
 void ZOOrkEngine::handleCheckCommand() {
     Room *currentRoom = player->getCurrentRoom();
     std::vector<Item *> items = currentRoom->getItems();
-    std::list<Character*> characters = currentRoom->getCharacters();  // Get the characters in the room
+    std::list<Character *> characters = currentRoom->getCharacters();  // Get the characters in the room
 
     if (items.empty()) {
         std::cout << "There are no items in this room.\n";
@@ -295,4 +297,27 @@ void ZOOrkEngine::handleFightCommand(std::vector<std::string> arguments) {
             break;
         }
     }
+}
+
+void ZOOrkEngine::handleTalkCommand(std::vector<std::string> arguments) {
+    // Check if the user specified a character to talk to
+    if (arguments.empty()) {
+        std::cout << "You must specify a character to talk to.\n";
+        return;
+    }
+
+    // Get the character name from the arguments
+    std::string characterName = arguments[0];
+
+    // Get the character from the current room
+    Character *character = player->getCurrentRoom()->getCharacter(characterName);
+
+    // Check if the character exists in the current room
+    if (!character) {
+        std::cout << "There's no character named '" << characterName << "' here to talk to!" << std::endl;
+        return;
+    }
+
+    // Have the character talk
+    character->talk();
 }

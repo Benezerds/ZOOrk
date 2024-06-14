@@ -38,6 +38,7 @@ private:
 
     void handleFightCommand(std::vector<std::string>);
 
+    void handleTalkCommand(std::vector<std::string>);
 
 
     static std::vector<std::string> tokenizeString(const std::string&);

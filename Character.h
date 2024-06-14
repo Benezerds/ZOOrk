@@ -27,6 +27,7 @@ public:
     // Interaction methods
     virtual void talkTo(Player*);
     virtual void attackTo(Player*);
+    void talk();
 
 protected:
     std::vector<Item*> inventory;

@@ -64,3 +64,9 @@ void Character::attackTo(Player* player) {
 
     std::cout << "NPC " << this->getName() << " attacks player, causing " << npcAttack << " damage!" << std::endl;
 }
+
+void Character::talk() {
+    // For now, let's just print a message when a character talks
+    std::cout << this->getName() << " says: 'Hello!'" << std::endl;
+}
+
