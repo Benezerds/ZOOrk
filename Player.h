@@ -30,7 +30,12 @@ public:
 
     void useItem(const std::string&);
 
+    bool hasItem(const std::string&);
+
     Player &operator=(const Player &) = delete;
+
+    int getInventorySize() const;
+
 
 private:
     static Player *playerInstance;

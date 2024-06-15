@@ -151,6 +151,12 @@ void ZOOrkEngine::handleTakeCommand(std::vector<std::string> arguments) {
         return;
     }
 
+    // Check if the player's inventory is full
+    if (player->getInventorySize() >= 3) {
+        std::cout << "Your inventory is full. You can't carry any more items.\n";
+        return;
+    }
+
     std::string itemName = arguments[0];
     Room *currentRoom = player->getCurrentRoom();
     Item *item = currentRoom->getItem(itemName);
@@ -262,7 +268,6 @@ void ZOOrkEngine::handleCheckCommand() {
         }
     }
 }
-
 
 void ZOOrkEngine::handleFightCommand(std::vector<std::string> arguments) {
     // Check if the user specified an enemy to fight

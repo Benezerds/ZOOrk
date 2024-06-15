@@ -38,10 +38,16 @@ void Player::attack(Character* character) {
     // Calculate damage based on the player's attack value
     int damage = this->getAttack();
 
+    // Increase damage by 10 if the player has a sword
+    if (hasItem("sword")) {
+        damage += 10;
+    }
+
     // Reduce the character's health by the damage amount
     int characterHealth = character->getHealth();
     character->setHealth(characterHealth - damage);
 }
+
 
 void Player::useItem(const std::string& itemName) {
     // Find the item in the inventory
@@ -59,4 +65,18 @@ void Player::useItem(const std::string& itemName) {
     // Remove the item from the inventory after use
     removeItem(itemName);
 }
+
+bool Player::hasItem(const std::string& itemName) {
+    for (Item* item : inventory) {
+        if (item->getName() == itemName) {
+            return true;
+        }
+    }
+    return false;
+}
+
+int Player::getInventorySize() const {
+    return inventory.size();
+}
+
 
