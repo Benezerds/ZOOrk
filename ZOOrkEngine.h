@@ -46,6 +46,8 @@ private:
     static std::string makeLowercase(std::string);
 
     void handleCheckCommand();
+
+    void handleInventoryCommand();
 };
 
 

@@ -51,6 +51,8 @@ void ZOOrkEngine::run() {
                 handleFightCommand(arguments);
             } else if (command == "talk") {
                 handleTalkCommand(arguments);
+            } else if (command == "inventory") {
+                handleInventoryCommand();
             } else {
                 std::cout << "I don't understand that command.\n";
             }
@@ -360,4 +362,22 @@ void ZOOrkEngine::handleTalkCommand(std::vector<std::string> arguments) {
 
     // Have the character talk
     character->talk();
+}
+
+
+void ZOOrkEngine::handleInventoryCommand() {
+    // Get the player's inventory
+    std::vector<Item *> inventory = player->getInventory(); // You need to implement this function
+
+    // Check if the inventory is empty
+    if (inventory.empty()) {
+        std::cout << "Your inventory is empty.\n";
+        return;
+    }
+
+    // Print the items in the inventory
+    std::cout << "Your inventory contains the following items:\n";
+    for (Item *item: inventory) {
+        std::cout << "- " << item->getName() << "\n";
+    }
 }

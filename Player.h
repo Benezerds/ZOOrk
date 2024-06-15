@@ -36,6 +36,8 @@ public:
 
     int getInventorySize() const;
 
+    std::vector<Item*> getInventory() const;
+
 
 private:
     static Player *playerInstance;

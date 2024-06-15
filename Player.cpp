@@ -79,4 +79,8 @@ int Player::getInventorySize() const {
     return inventory.size();
 }
 
+std::vector<Item*> Player::getInventory() const {
+    return inventory;
+}
+
 
