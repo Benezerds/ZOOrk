@@ -48,6 +48,8 @@ private:
     void handleCheckCommand();
 
     void handleInventoryCommand();
+
+    void handleHelpCommand();
 };
 
 

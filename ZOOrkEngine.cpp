@@ -53,6 +53,8 @@ void ZOOrkEngine::run() {
                 handleTalkCommand(arguments);
             } else if (command == "inventory") {
                 handleInventoryCommand();
+            } else if (command == "help") {
+                handleHelpCommand();
             } else {
                 std::cout << "I don't understand that command.\n";
             }
@@ -381,3 +383,18 @@ void ZOOrkEngine::handleInventoryCommand() {
         std::cout << "- " << item->getName() << "\n";
     }
 }
+
+void ZOOrkEngine::handleHelpCommand() {
+    std::cout << "Available commands:\n";
+    std::cout << "- go [direction]: Move in the specified direction.\n";
+    std::cout << "- look or inspect: Get a description of your surroundings or inspect an item.\n";
+    std::cout << "- take or get [item]: Pick up an item.\n";
+    std::cout << "- drop [item]: Drop an item from your inventory.\n";
+    std::cout << "- quit: Quit the game.\n";
+    std::cout << "- use [item]: Use an item from your inventory.\n";
+    std::cout << "- check: Check your surroundings for items or NPC.\n";
+    std::cout << "- fight [enemy]: Engage in combat with an enemy.\n";
+    std::cout << "- talk [character]: Talk to a character.\n";
+    std::cout << "- inventory: Check the items in your inventory.\n";
+}
+
