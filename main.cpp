@@ -131,7 +131,7 @@ int main() {
 
     //  Character
     Character* lion = new Character("lion", "A lion inside a prison, odd, but the king of the jungle become the king of the cell.");
-    Character* calcius = new Character("Calcius", "A mysterious person standing in the middle of the room.");
+    Character* calcius = new Character("calcius", "A mysterious person standing in the middle of the room.");
     Player* player = Player::instance();
 
     lion->setHealth(100);

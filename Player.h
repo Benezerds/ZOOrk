@@ -38,14 +38,18 @@ public:
 
     std::vector<Item*> getInventory() const;
 
-
+    bool isEnemyTamedOrRemoved() const;
 private:
     static Player *playerInstance;
     Room* currentRoom;
     std::vector<Item*> inventory;
+    bool enemyTamedOrRemoved;
 
     Player() : Character("You", "You are a person, alike in dignity to any other, but uniquely you."),
-               currentRoom(new NullRoom()) {}
+               currentRoom(new NullRoom()),
+               enemyTamedOrRemoved(false) {} // Initialize the flag to false
+
+
 };
 
 #endif //ZOORK_PLAYER_H

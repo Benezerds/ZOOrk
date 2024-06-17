@@ -34,11 +34,14 @@ public:
 
     std::list<Character*> getCharacters();
 
+    void removeCharacter(const std::string &characterName);
+
+    bool hasCharacter(const std::string &characterName) const;
+
 protected:
     std::vector<Item*> items;
     std::map<std::string, std::shared_ptr<Passage>> passageMap;
     std::list<Character*> characters;  // Add this member
-
 };
 
 #endif //ZOORK_ROOM_H

@@ -78,7 +78,25 @@ std::list<Character*> Room::getCharacters() {
     return characters;  // Assuming 'characters' is a list of characters in the room
 }
 
+void Room::removeCharacter(const std::string& characterName) {
+    for (auto it = characters.begin(); it != characters.end(); ++it) {
+        if ((*it)->getName() == characterName) {
+            characters.erase(it);
+            std::cout << characterName << " has been removed from the room." << std::endl;
+            return;
+        }
+    }
+    std::cout << "No character named '" << characterName << "' found in the room." << std::endl;
+}
 
+bool Room::hasCharacter(const std::string& characterName) const {
+    for (const auto& character : characters) {
+        if (character->getName() == characterName) {
+            return true;
+        }
+    }
+    return false;
+}
 
 
 

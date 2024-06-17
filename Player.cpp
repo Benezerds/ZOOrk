@@ -59,12 +59,23 @@ void Player::useItem(const std::string& itemName) {
         return;
     }
 
+    // Assuming 'currentRoom' is a pointer to the current room the player is in
+    Character* enemy = currentRoom->getCharacter("lion");
+
+    // Check if there is a lion in the room and the item used is a steak
+    if (itemName == "steak" && currentRoom->hasCharacter("lion")) {
+        std::cout << "You have tamed the lion with the steak!" << std::endl;
+        currentRoom->removeCharacter("lion");
+        enemyTamedOrRemoved = true; // Set the flag
+    }
+
     // Use the item
     std::cout << "You used the item '" << itemName << "'." << std::endl;
 
     // Remove the item from the inventory after use
     removeItem(itemName);
 }
+
 
 bool Player::hasItem(const std::string& itemName) {
     for (Item* item : inventory) {
@@ -82,5 +93,10 @@ int Player::getInventorySize() const {
 std::vector<Item*> Player::getInventory() const {
     return inventory;
 }
+
+bool Player::isEnemyTamedOrRemoved() const {
+    return enemyTamedOrRemoved;
+}
+
 
 

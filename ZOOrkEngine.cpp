@@ -312,6 +312,7 @@ void ZOOrkEngine::handleFightCommand(std::vector<std::string> arguments) {
                     // Check if the enemy is dead
                     if (enemy->getHealth() <= 0) {
                         std::cout << "You have defeated the enemy '" << enemyName << "'!" << std::endl;
+                        player->getCurrentRoom()->removeCharacter(enemyName);
                         return;
                     }
                     break;
@@ -319,7 +320,14 @@ void ZOOrkEngine::handleFightCommand(std::vector<std::string> arguments) {
                     std::cout << "Enter the name of the item you want to use: ";
                     std::getline(std::cin, itemName);
                     player->useItem(itemName);
+
+                    if (player->isEnemyTamedOrRemoved()) {
+                        // The enemy has been tamed or removed, so exit the fight loop
+                        return;
+                    }
+
                     break;
+
                 case 3: // The player runs away
                     std::cout << "You ran away from the enemy '" << enemyName << "'!" << std::endl;
                     return;
