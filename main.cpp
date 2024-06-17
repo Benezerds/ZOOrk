@@ -5,6 +5,7 @@
 #include "ZOOrkEngine.h"
 #include "Item.h"
 #include "Door.h"
+#include "Calcius.h"
 
 int main() {
     //  Map List
@@ -131,8 +132,8 @@ int main() {
 
     //  Character
     Character* lion = new Character("lion", "A lion inside a prison, odd, but the king of the jungle become the king of the cell.");
-    Character* calcius = new Character("calcius", "A mysterious person standing in the middle of the room.");
-    Player* player = Player::instance();
+    Character* calcius = new Calcius();
+
 
     lion->setHealth(100);
     lion->setAttack(10);
@@ -140,7 +141,7 @@ int main() {
     calcius->setHealth(50);
     calcius->setAttack(2);
 
-    start->addCharacter(calcius);
+    chamber_of_revelation->addCharacter(calcius);
     arena_of_fate_room->addCharacter(lion);
 
     ZOOrkEngine zoork(start);
